@@ -5,7 +5,7 @@ var http = require('http');
 var moment = require('moment');
 var hour = moment().format('LLLL');
 
-//app.use(express.static('public'));
+//app.use(express.static('public')); 
 
 function getDateTime() {
 
