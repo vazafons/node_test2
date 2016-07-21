@@ -18,6 +18,7 @@
   "homepage": "https://github.com/vazafons/node_test2#readme",
   "dependencies": {
     "express": "^4.14.0",
-    "moment": "^2.14.1"
+    "debug": "~2.2.0",
+    "jade": "~1.11.0"
   }
 }

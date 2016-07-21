@@ -1,40 +1,48 @@
 'use strict'
 var express = require('express');
+var path = require('path');
+var controllers = require('./controllers/index');
+
 var app = express();
-var http = require('http');
-var moment = require('moment');
-var hour = moment().format('LLLL');
 
-//app.use(express.static('public'));  
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 
-function getDateTime() {
+// uncomment after placing your favicon in /public
+app.use(express.static(path.join(__dirname, 'public')));
 
-    var date = new Date();
+app.use('/', controllers), require('./controllers/index');;
 
-    var hour = date.getHours();
-    
-
-    var min  = date.getMinutes();
-    
-
-    var sec  = date.getSeconds();
-    
-
-    var year = date.getFullYear();
-
-    var month = date.getMonth() + 1;
-   
-
-    var day  = date.getDate();
-    
-
-    return year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec;
-
-}
-
-var server = http.createServer(function(req, res) {
-  res.writeHead(200);
-  res.end(getDateTime());
+//catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
 
-server.listen(8000); 
+// error handlers
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
+    });
+  });
+}
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: {}
+  });
+});
+
+module.exports = app;
