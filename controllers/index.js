@@ -7,4 +7,8 @@ router.get('/', function (req, res, next) {
   res.render('index', dateDujour());
 });
 
+router.get('/test', function (req, res, next) {
+  res.render('test',{title: 'youpidouo'});
+});
+
 module.exports = router;
