@@ -11,4 +11,4 @@ router.get('/test', function (req, res, next) {
   res.render('test',{title: 'youpidouo'});
 });
 
-module.exports = router;
+module.exports = router; 
