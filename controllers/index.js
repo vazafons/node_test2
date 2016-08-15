@@ -29,8 +29,18 @@ router.get('/test', function (req, res, next) {
 
 
 router.get('/fruits', function (req, res, next) {
-    connection.query("SELECT * FROM testsequelize.sensorvalues;") 
+    connection.query("SELECT * FROM testsequelize.sensorvalues order by Sensors_SID;") 
     .then(function (projects) {
+      var array = []
+      var init = projects[0][0].Sensors_SID
+      for (var i = 0; i < projects[0].length; i++){
+          if (init == projects[0][i].Sensors_SID ){
+          array.push(projects[0][i].Sensors_SID + "  " +projects[0][i].Value);
+          }
+          else{
+            init = projects[0][i].Sensors_SID;
+          }
+      }
       res.render('fruits', {
         title: projects[0][0].Sensors_SID,
         sensId: projects[0][0].Sensors_SID,
@@ -38,7 +48,7 @@ router.get('/fruits', function (req, res, next) {
         sensors: projects[0]
       })
       // console.log("start-toto")
-      // console.log(projects)
+       console.log(projects)
       // console.log("end-toto")
     });
 });
