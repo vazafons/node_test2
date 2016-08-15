@@ -24,20 +24,23 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/test', function (req, res, next) {
-  res.render('test',{title: 'youpidouo'});
+  res.render('test', { title: 'youpidouo' });
 });
 
 
 router.get('/fruits', function (req, res, next) {
-  //res.render('fruits', NbDeFruits());
-  res.render('fruits', {title: connection.sync().then(function () {
-
-connection.query("SELECT * FROM testsequelize.sensorvalues LIMIT 2;").then(function(projects) {
- return (console.log(projects));
-})
-
-})
- });
+    connection.query("SELECT * FROM testsequelize.sensorvalues;")
+    .then(function (projects) {
+      res.render('fruits', {
+        title: projects[0][0].Sensors_SID,
+        sensId: projects[0][0].Sensors_SID,
+        sensVal: projects[0][0].Value,
+        sensors: projects[0]
+      })
+      // console.log("start-toto")
+      // console.log(projects)
+      // console.log("end-toto")
+    });
 });
 
 module.exports = router; 

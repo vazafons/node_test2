@@ -2,5 +2,10 @@ extends layout
 
 block content
   p Welcome to #{title}
+  p #{sensId}:#{sensVal}  
+  
+  ol
+    each sens in sensors
+      li #{sens.CreatedAt} : #{sens.Sensors_SID} : #{sens.Value}
 
 
