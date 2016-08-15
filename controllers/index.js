@@ -29,7 +29,7 @@ router.get('/test', function (req, res, next) {
 
 
 router.get('/fruits', function (req, res, next) {
-    connection.query("SELECT * FROM testsequelize.sensorvalues;")
+    connection.query("SELECT * FROM testsequelize.sensorvalues;") 
     .then(function (projects) {
       res.render('fruits', {
         title: projects[0][0].Sensors_SID,
