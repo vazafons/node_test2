@@ -29,17 +29,35 @@ router.get('/test', function (req, res, next) {
 
 
 router.get('/fruits', function (req, res, next) {
-    connection.query("SELECT * FROM testsequelize.sensorvalues order by Sensors_SID;") 
+  connection.query("SELECT * FROM testsequelize.sensorvalues order by Sensors_SID;")
     .then(function (projects) {
       var array = []
       var init = projects[0][0].Sensors_SID
-      for (var i = 0; i < projects[0].length; i++){
-          if (init == projects[0][i].Sensors_SID ){
-          array.push(projects[0][i].Sensors_SID + "  " +projects[0][i].Value);
+      var k = 0;
+      var obj = {
+        title: init,
+        values: [{
+          sensVal: projects[0][k].Value
+        }]
+      }
+      //array.push(obj);
+      for (var i = 1; i < projects[0].length - 1; i++) {
+        if (init == projects[0][i].Sensors_SID) {
+          //array.init.push({title: projects[0][0].Sensors_SID, sensVal: projects[0][0].Value});
+          obj.values.push({ sensVal: projects[0][i].Value });
+        }
+        else {
+          array[k] = obj;
+          k++
+          init = projects[0][i].Sensors_SID;
+          var obj = {
+            title: init,
+            values: [{
+              sensVal: projects[0][i].Value
+            }]
           }
-          else{
-            init = projects[0][i].Sensors_SID;
-          }
+          //array.push(obj);
+        }
       }
       res.render('fruits', {
         title: projects[0][0].Sensors_SID,
@@ -48,7 +66,7 @@ router.get('/fruits', function (req, res, next) {
         sensors: projects[0]
       })
       // console.log("start-toto")
-       console.log(projects)
+      console.log(projects)
       // console.log("end-toto")
     });
 });
