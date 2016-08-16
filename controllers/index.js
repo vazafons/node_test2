@@ -37,7 +37,7 @@ router.get('/fruits', function (req, res, next) {
       var obj = {
         title: init,
         values: [{
-          sensVal: projects[0][k].Value
+        sensVal: projects[0][0].Value
         }]
       }
       //array.push(obj);
@@ -45,9 +45,9 @@ router.get('/fruits', function (req, res, next) {
         if (init == projects[0][i].Sensors_SID) {
           //array.init.push({title: projects[0][0].Sensors_SID, sensVal: projects[0][0].Value});
           obj.values.push({ sensVal: projects[0][i].Value });
+          array[k] = obj;
         }
         else {
-          array[k] = obj;
           k++
           init = projects[0][i].Sensors_SID;
           var obj = {
