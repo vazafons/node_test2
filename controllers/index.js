@@ -44,6 +44,8 @@ router.get('/fruits', function (req, res, next) {
             title: currentSensorItem.Sensors_SID, 
             values: [] 
           };
+
+          //existingSensor[currentSensorItem.Sensors_SID] = {};
         }
 
         existingSensor.values.push({
