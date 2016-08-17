@@ -32,8 +32,8 @@ router.get('/fruits', function (req, res, next) {
   connection.query("SELECT * FROM testsequelize.sensorvalues order by Sensors_SID;")
     .then(function (projects) {
       var structuredValues= [];
-      for (var i = 0; i < projects[0].length; i++) {
-        var currentSensorItem = projects[0][i];
+      
+      projects[0].map(function(currentSensorItem){
         var existingSensorObjs = structuredValues.filter(function(sensor){ return sensor.title === currentSensorItem.Sensors_SID });
         var existingSensor;
 
@@ -54,7 +54,7 @@ router.get('/fruits', function (req, res, next) {
         if(existingSensorObjs.length <= 0){
          structuredValues.push(existingSensor);
         }
-      }
+      });
 
       res.render('fruits', {
         title: projects[0][0].Sensors_SID,
@@ -62,7 +62,7 @@ router.get('/fruits', function (req, res, next) {
         sensVal: projects[0][0].Value,
         sensors: projects[0],
         values : structuredValues
-      })
+      });
     });
 });
 
