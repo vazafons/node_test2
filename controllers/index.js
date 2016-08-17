@@ -63,7 +63,8 @@ router.get('/fruits', function (req, res, next) {
         title: projects[0][0].Sensors_SID,
         sensId: projects[0][0].Sensors_SID,
         sensVal: projects[0][0].Value,
-        sensors: projects[0]
+        sensors: projects[0],
+        values : array
       })
       // console.log("start-toto")
       console.log(projects)
