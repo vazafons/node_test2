@@ -14,4 +14,6 @@ block content
    ol
     each val in values
       li #{val.title}
-        
+      each val2 in val.values  
+        ul <b>#{val2.sensVal} </b>
+        ul #{val2.date} 

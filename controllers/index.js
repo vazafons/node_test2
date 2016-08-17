@@ -37,7 +37,8 @@ router.get('/fruits', function (req, res, next) {
       var obj = {
         title: init,
         values: [{
-        sensVal: projects[0][0].Value
+        sensVal: projects[0][0].Value,
+        date: projects[0][0].CreatedAt
         }]
       }
       //array.push(obj);
@@ -45,6 +46,7 @@ router.get('/fruits', function (req, res, next) {
         if (init == projects[0][i].Sensors_SID) {
           //array.init.push({title: projects[0][0].Sensors_SID, sensVal: projects[0][0].Value});
           obj.values.push({ sensVal: projects[0][i].Value });
+          obj.values.push({ date: projects[0][0].CreatedAt });
           array[k] = obj;
         }
         else {
@@ -53,7 +55,8 @@ router.get('/fruits', function (req, res, next) {
           var obj = {
             title: init,
             values: [{
-              sensVal: projects[0][i].Value
+              sensVal: projects[0][0].Value,
+              date: projects[0][0].CreatedAt
             }]
           }
           //array.push(obj);
