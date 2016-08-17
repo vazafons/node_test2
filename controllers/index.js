@@ -31,47 +31,38 @@ router.get('/test', function (req, res, next) {
 router.get('/fruits', function (req, res, next) {
   connection.query("SELECT * FROM testsequelize.sensorvalues order by Sensors_SID;")
     .then(function (projects) {
-      var array = []
-      var init = projects[0][0].Sensors_SID
-      var k = 0;
-      var obj = {
-        title: init,
-        values: [{
-        sensVal: projects[0][0].Value,
-        date: projects[0][0].CreatedAt
-        }]
-      }
-      //array.push(obj);
-      for (var i = 1; i < projects[0].length - 1; i++) {
-        if (init == projects[0][i].Sensors_SID) {
-          //array.init.push({title: projects[0][0].Sensors_SID, sensVal: projects[0][0].Value});
-          obj.values.push({ sensVal: projects[0][i].Value });
-          obj.values.push({ date: projects[0][0].CreatedAt });
-          array[k] = obj;
+      var structuredValues= [];
+      for (var i = 0; i < projects[0].length; i++) {
+        var currentSensorItem = projects[0][i];
+        var existingSensorObjs = structuredValues.filter(function(sensor){ return sensor.title === currentSensorItem.Sensors_SID });
+        var existingSensor;
+
+        if(existingSensorObjs.length > 0){
+          existingSensor =  existingSensorObjs[0];
+        } else {
+          existingSensor = { 
+            title: currentSensorItem.Sensors_SID, 
+            values: [] 
+          };
         }
-        else {
-          k++
-          init = projects[0][i].Sensors_SID;
-          var obj = {
-            title: init,
-            values: [{
-              sensVal: projects[0][0].Value,
-              date: projects[0][0].CreatedAt
-            }]
-          }
-          //array.push(obj);
+
+        existingSensor.values.push({
+          sensVal: currentSensorItem.Value, 
+          date: currentSensorItem.CreatedAt
+        });
+
+        if(existingSensorObjs.length <= 0){
+         structuredValues.push(existingSensor);
         }
       }
+
       res.render('fruits', {
         title: projects[0][0].Sensors_SID,
         sensId: projects[0][0].Sensors_SID,
         sensVal: projects[0][0].Value,
         sensors: projects[0],
-        values : array
+        values : structuredValues
       })
-      // console.log("start-toto")
-      console.log(projects)
-      // console.log("end-toto")
     });
 });
 
