@@ -3,17 +3,20 @@ extends layout
 block content
   p Welcome to #{title}
   p #{sensId}:#{sensVal}  
-  
-  ol
-    each sens in sensors
-      li #{sens.CreatedAt} : #{sens.Sensors_SID} : #{sens.Value}
 
 
    p -----------------------------------------------------------------------------------------
 
-   ol
-    each sens in values
-      li #{sens.title}
-      each sensValItem in sens.values  
-        ul <b>#{sensValItem.sensVal} </b>
-        ul #{sensValItem.date} 
+
+
+  fieldset.rotatinglist
+  legend Liste déroulante capteurs 
+  form(method='get', action='sensor')
+    select(name='selectSensor', onchange='change()')
+      each sens in values
+        option(value='#{sens.title}')  #{sens.title}
+    input(type='submit', name='Submit', value='Suivant')
+
+ 
+
+      

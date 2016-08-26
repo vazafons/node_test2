@@ -27,6 +27,12 @@ router.get('/test', function (req, res, next) {
   res.render('test', { title: 'youpidouo' });
 });
 
+router.get('/sensor', function (req, res, next) {
+  var sensId = req.query.selectSensor;
+
+  res.render('sensor', { title: 'sensor' });
+});
+
 
 router.get('/fruits', function (req, res, next) {
   connection.query("SELECT * FROM testsequelize.sensorvalues order by Sensors_SID;")
