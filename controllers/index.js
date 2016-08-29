@@ -29,38 +29,73 @@ router.get('/test', function (req, res, next) {
 
 router.get('/sensor', function (req, res, next) {
   var sensId = req.query.selectSensor;
-
-  res.render('sensor', { title: 'sensor' });
-});
-
-
-router.get('/fruits', function (req, res, next) {
-  connection.query("SELECT * FROM testsequelize.sensorvalues order by Sensors_SID;")
+  connection.query("SELECT * FROM testsequelize.sensorvalues Where Sensors_SID = \'" + sensId + "\'")
     .then(function (projects) {
-      var structuredValues= [];
-      
-      projects[0].map(function(currentSensorItem){
-        var existingSensorObjs = structuredValues.filter(function(sensor){ return sensor.title === currentSensorItem.Sensors_SID });
+      var structuredValues = [];
+
+      projects[0].map(function (currentSensorItem) {
+        var existingSensorObjs = structuredValues.filter(function (sensor) { return sensor.title === currentSensorItem.Sensors_SID });
         var existingSensor;
 
-        if(existingSensorObjs.length > 0){
-          existingSensor =  existingSensorObjs[0];
+        if (existingSensorObjs.length > 0) {
+          existingSensor = existingSensorObjs[0];
         } else {
-          existingSensor = { 
-            title: currentSensorItem.Sensors_SID, 
-            values: [] 
+          existingSensor = {
+            title: currentSensorItem.Sensors_SID,
+            values: []
           };
 
           //existingSensor[currentSensorItem.Sensors_SID] = {};
         }
 
         existingSensor.values.push({
-          sensVal: currentSensorItem.Value, 
+          sensVal: currentSensorItem.Value,
           date: currentSensorItem.CreatedAt
         });
 
-        if(existingSensorObjs.length <= 0){
-         structuredValues.push(existingSensor);
+        if (existingSensorObjs.length <= 0) {
+          structuredValues.push(existingSensor);
+        }
+      });
+
+      res.render('sensor', {
+        title: projects[0][0].Sensors_SID,
+        sensId: projects[0][0].Sensors_SID,
+        sensVal: projects[0][0].Value,
+        sensors: projects[0],
+        values: structuredValues
+      });
+     });
+});
+
+
+router.get('/fruits', function (req, res, next) {
+  connection.query("SELECT * FROM testsequelize.sensorvalues order by Sensors_SID;")
+    .then(function (projects) {
+      var structuredValues = [];
+
+      projects[0].map(function (currentSensorItem) {
+        var existingSensorObjs = structuredValues.filter(function (sensor) { return sensor.title === currentSensorItem.Sensors_SID });
+        var existingSensor;
+
+        if (existingSensorObjs.length > 0) {
+          existingSensor = existingSensorObjs[0];
+        } else {
+          existingSensor = {
+            title: currentSensorItem.Sensors_SID,
+            values: []
+          };
+
+          //existingSensor[currentSensorItem.Sensors_SID] = {};
+        }
+
+        existingSensor.values.push({
+          sensVal: currentSensorItem.Value,
+          date: currentSensorItem.CreatedAt
+        });
+
+        if (existingSensorObjs.length <= 0) {
+          structuredValues.push(existingSensor);
         }
       });
 
@@ -69,10 +104,9 @@ router.get('/fruits', function (req, res, next) {
         sensId: projects[0][0].Sensors_SID,
         sensVal: projects[0][0].Value,
         sensors: projects[0],
-        values : structuredValues
+        values: structuredValues
       });
     });
 });
 
 module.exports = router; 
-
