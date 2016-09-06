@@ -5,7 +5,8 @@ var NbDeFruits = require('../models/NbDeFruits');
 
 var Sequelize = require('sequelize');
 
-var connection = new Sequelize('testsequelize', 'root', 'password');
+//var connection = new Sequelize('testsequelize', 'root', 'password');
+var connection = new Sequelize('testsequelize', 'insertValues', 'pass');
 
 /*
 var fs = require('fs');
