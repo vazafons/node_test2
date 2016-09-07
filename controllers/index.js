@@ -30,6 +30,10 @@ router.get('/test', function (req, res, next) {
 
 router.get('/sensor', function (req, res, next) {
   var sensId = req.query.selectSensor;
+  var calendar = req.query.calendar;
+  var timeBegin = req.query.timeDebut;
+  //var timeEnd = req.query.timeFin;
+  //var timeFinal = null;
   connection.query("SELECT * FROM testsequelize.sensorvalues Where Sensors_SID = \'" + sensId + "\'")
     .then(function (projects) {
       var structuredValues = [];
@@ -70,7 +74,7 @@ router.get('/sensor', function (req, res, next) {
 });
 
 
-router.get('/fruits', function (req, res, next) {
+router.get('/sensors', function (req, res, next) {
   connection.query("SELECT * FROM testsequelize.sensorvalues order by Sensors_SID;")
     .then(function (projects) {
       var structuredValues = [];
@@ -100,7 +104,7 @@ router.get('/fruits', function (req, res, next) {
         }
       });
 
-      res.render('fruits', {
+      res.render('sensors', {
         title: projects[0][0].Sensors_SID,
         sensId: projects[0][0].Sensors_SID,
         sensVal: projects[0][0].Value,
