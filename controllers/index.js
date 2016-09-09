@@ -32,9 +32,11 @@ router.get('/sensor', function (req, res, next) {
   var sensId = req.query.selectSensor;
   var calendar = req.query.calendar;
   var timeBegin = req.query.timeDebut;
-  //var timeEnd = req.query.timeFin;
-  //var timeFinal = null;
-  connection.query("SELECT * FROM testsequelize.sensorvalues Where Sensors_SID = \'" + sensId + "\'")
+  var timeEnd = req.query.timeFin;
+  var timeFinal1 = calendar + " " + timeBegin ;
+  var timeFinal2 = calendar + " " + timeEnd ;
+  //connection.query("SELECT * FROM testsequelize.sensorvalues Where Sensors_SID = \'" + sensId + "\'")
+  connection.query("SELECT * FROM testsequelize.sensorvalues Where Sensors_SID = \'" + sensId + "\' AND CreatedAt BETWEEN \'" + timeFinal1 + "\' AND \'" + timeFinal2 + "\'")
     .then(function (projects) {
       var structuredValues = [];
 

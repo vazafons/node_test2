@@ -1,11 +1,9 @@
 extends layout
 
 block content
-  p test
-
   ol
     each sens in values
-      li #{sens.title}
+      h1 #{sens.title}
       each sensValItem in sens.values  
         ul <b>#{sensValItem.sensVal} </b>
         ul #{sensValItem.date} 

@@ -1,24 +1,17 @@
 extends layout
-
 block content
-  p Welcome to #{title}
-  p #{sensId}:#{sensVal}  
-
-
-   p -----------------------------------------------------------------------------------------
-
-
-
+  h1  Liste déroulante capteurs 
   fieldset.rotatinglist
-  legend Liste déroulante capteurs 
   form(method='get', action='sensor')
     select(name='selectSensor', onchange='change()')
       each sens in values
         option(value='#{sens.title}')  #{sens.title}
-    input(type='submit', name='Submit', value='Suivant')
     input(type="date" name='calendar')
     input(type="time" name='timeDebut')
     input(type="time" name='timeFin')
+    input(type='submit', name='Submit', value='Suivant')
+    br
+    input(type='submit', name='Submit2', value='+')
  
   
       
