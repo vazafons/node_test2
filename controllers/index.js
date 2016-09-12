@@ -57,7 +57,7 @@ router.get('/sensor', function (req, res, next) {
 
         existingSensor.values.push({
           sensVal: currentSensorItem.Value,
-          date: currentSensorItem.CreatedAt
+          date: moment(currentSensorItem.CreatedAt).format("DD-MM-YYYY HH:mm:ss")
         });
 
         if (existingSensorObjs.length <= 0) {
