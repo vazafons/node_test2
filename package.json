@@ -17,8 +17,9 @@
   },
   "homepage": "https://github.com/vazafons/node_test2#readme",
   "dependencies": {
-    "express": "^4.14.0",
+    "chart.js": "^2.2.2",
     "debug": "~2.2.0",
+    "express": "^4.14.0",
     "jade": "~1.11.0",
     "sequelize": "^3.23.6"
   }

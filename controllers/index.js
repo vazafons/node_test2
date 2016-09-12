@@ -23,8 +23,8 @@ router.get('/', function (req, res, next) {
   res.render('index', dateDujour());
 });
 
-router.get('/test', function (req, res, next) {
-  res.render('test', { title: 'youpidouo' });
+router.get('/graph', function (req, res, next) {
+  res.render('graph', );
 });
 
 router.get('/sensor', function (req, res, next) {
@@ -57,7 +57,7 @@ router.get('/sensor', function (req, res, next) {
 
         existingSensor.values.push({
           sensVal: currentSensorItem.Value,
-          date: moment(currentSensorItem.CreatedAt).format("DD-MM-YYYY HH:mm:ss")
+          date: moment(currentSensorItem.CreatedAt).utc().format("DD-MM-YYYY HH:mm:ss")
         });
 
         if (existingSensorObjs.length <= 0) {

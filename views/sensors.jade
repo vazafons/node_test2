@@ -3,7 +3,7 @@ block content
   h1  Liste déroulante capteurs 
   fieldset.rotatinglist
   form(method='get', action='sensor')
-    select(name='selectSensor', onchange='change()')
+    select(name='selectSensor', onchange='')
       each sens in values
         option(value='#{sens.title}')  #{sens.title}
     input(type="date" name='calendar')
