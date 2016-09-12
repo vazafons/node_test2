@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var dateDujour = require('../models/dateDujour');
 var NbDeFruits = require('../models/NbDeFruits');
-
 var Sequelize = require('sequelize');
 
 //var connection = new Sequelize('testsequelize', 'root', 'password');
@@ -35,6 +34,7 @@ router.get('/sensor', function (req, res, next) {
   var timeEnd = req.query.timeFin;
   var timeFinal1 = calendar + " " + timeBegin ;
   var timeFinal2 = calendar + " " + timeEnd ;
+  var moment = require('moment');
   //connection.query("SELECT * FROM testsequelize.sensorvalues Where Sensors_SID = \'" + sensId + "\'")
   connection.query("SELECT * FROM testsequelize.sensorvalues Where Sensors_SID = \'" + sensId + "\' AND CreatedAt BETWEEN \'" + timeFinal1 + "\' AND \'" + timeFinal2 + "\'")
     .then(function (projects) {
