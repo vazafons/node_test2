@@ -4,8 +4,10 @@ var dateDujour = require('../models/dateDujour');
 var NbDeFruits = require('../models/NbDeFruits');
 var Sequelize = require('sequelize');
 
-//var connection = new Sequelize('testsequelize', 'root', 'password');
-var connection = new Sequelize('testsequelize', 'insertValues', 'pass');
+var connection = new Sequelize('testsequelize', 'root', 'password');
+
+var Post = connection.define('sensorvalues', {});
+//var connection = new Sequelize('testsequelize', 'insertValues', 'pass');
 
 /*
 var fs = require('fs');
@@ -24,7 +26,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/graph', function (req, res, next) {
-  res.render('graph', );
+  res.render('graph');
 });
 
 router.get('/sensor', function (req, res, next) {
@@ -36,43 +38,14 @@ router.get('/sensor', function (req, res, next) {
   var timeFinal2 = calendar + " " + timeEnd ;
   var moment = require('moment');
   //connection.query("SELECT * FROM testsequelize.sensorvalues Where Sensors_SID = \'" + sensId + "\'")
-  connection.query("SELECT * FROM testsequelize.sensorvalues Where Sensors_SID = \'" + sensId + "\' AND CreatedAt BETWEEN \'" + timeFinal1 + "\' AND \'" + timeFinal2 + "\'")
-    .then(function (projects) {
-      var structuredValues = [];
-
-      projects[0].map(function (currentSensorItem) {
-        var existingSensorObjs = structuredValues.filter(function (sensor) { return sensor.title === currentSensorItem.Sensors_SID });
-        var existingSensor;
-
-        if (existingSensorObjs.length > 0) {
-          existingSensor = existingSensorObjs[0];
-        } else {
-          existingSensor = {
-            title: currentSensorItem.Sensors_SID,
-            values: []
-          };
-
-          //existingSensor[currentSensorItem.Sensors_SID] = {};
-        }
-
-        existingSensor.values.push({
-          sensVal: currentSensorItem.Value,
-          date: moment(currentSensorItem.CreatedAt).utc().format("DD-MM-YYYY HH:mm:ss")
-        });
-
-        if (existingSensorObjs.length <= 0) {
-          structuredValues.push(existingSensor);
-        }
-      });
-
-      res.render('sensor', {
-        title: projects[0][0].Sensors_SID,
-        sensId: projects[0][0].Sensors_SID,
-        sensVal: projects[0][0].Value,
-        sensors: projects[0],
-        values: structuredValues
-      });
-     });
+  //connection.query("SELECT * FROM testsequelize.sensorvalues Where Sensors_SID = \'" + sensId + "\' AND CreatedAt BETWEEN \'" + timeFinal1 + "\' AND \'" + timeFinal2 + "\'")
+  Post.findOne({
+  where: {Sensors_SID: 'DW1'},
+  attributes: ['*']
+}).then(function(project) {
+      var projects = [];
+      console.log(projects)
+       });
 });
 
 
