@@ -64,9 +64,17 @@ router.get('/sensor', function (req, res, next) {
 });
 });
 
+//connection.query("SELECT * FROM testsequelize.sensorvalues order by Sensors_SID;")
 router.get('/sensors', function (req, res, next) {
-  connection.query("SELECT * FROM testsequelize.sensorvalues order by Sensors_SID;")
+  connection.query("Select acquisitionsys.Computername, sensors.SID, boards.BID FROM acquisitionsys INNER JOIN boards ON acquisitionsys.IdAcquisitionSys = boards.AcquisitionSys_IdAcquisitionSys INNER JOIN sensors ON boards.AcquisitionSys_IdAcquisitionSys = sensors.Boards_AcquisitionSys_IdAcquisitionSys")
     .then(function (projects) {
+      console.log(projects[0])
+
+      res.render('sensors', {
+        title: projects[0]
+      });
+/*
+      
       var structuredValues = [];
 
       projects[0].map(function (currentSensorItem) {
@@ -101,6 +109,7 @@ router.get('/sensors', function (req, res, next) {
         sensors: projects[0],
         values: structuredValues
       });
+      */
     });
 });
 
