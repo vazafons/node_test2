@@ -34,20 +34,35 @@ router.get('/sensor', function (req, res, next) {
   var calendar = req.query.calendar;
   var timeBegin = req.query.timeDebut;
   var timeEnd = req.query.timeFin;
-  var timeFinal1 = calendar + " " + timeBegin ;
-  var timeFinal2 = calendar + " " + timeEnd ;
+  var timeFinal1 = calendar + " " + timeBegin;
+  var timeFinal2 = calendar + " " + timeEnd;
   var moment = require('moment');
   //connection.query("SELECT * FROM testsequelize.sensorvalues Where Sensors_SID = \'" + sensId + "\'")
   //connection.query("SELECT * FROM testsequelize.sensorvalues Where Sensors_SID = \'" + sensId + "\' AND CreatedAt BETWEEN \'" + timeFinal1 + "\' AND \'" + timeFinal2 + "\'")
-  Post.findOne({
-  where: {Sensors_SID: 'DW1'},
-  attributes: ['*']
-}).then(function(project) {
-      var projects = [];
-      console.log(projects)
-       });
-});
+  /*
+  Post.findAll({
+    where: { Sensors_SID: "DW1" },
+    attributes: ['*']
+  })
+  */
+  connection.query("SELECT * FROM testsequelize.sensorvalues Where Sensors_SID = \'" + sensId + "\'")
+  .then(function (project) {
 
+      console.log(project[0][0].Sensors_SID);
+      console.log(project[0][0].Value);
+      console.log(project[0][0].CreatedAt);
+      console.log(project[0]);
+        
+
+    res.render('sensor', {
+      title:  project[0][0].Sensors_SID,
+      sensId: project[0][0].Sensors_SID,
+      sensVal: project[0][0].Value,
+      sensDate: project[0][0].CreatedAt,
+      sensors: project[0],
+    });
+});
+});
 
 router.get('/sensors', function (req, res, next) {
   connection.query("SELECT * FROM testsequelize.sensorvalues order by Sensors_SID;")
