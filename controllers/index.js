@@ -45,7 +45,7 @@ router.get('/sensor', function (req, res, next) {
     attributes: ['*']
   })
   */
-  connection.query("SELECT * FROM testsequelize.sensorvalues Where Sensors_SID = \'" + sensId + "\'")
+  connection.query("SELECT * FROM testsequelize.sensorvalues Where Sensors_SID = 'DW1'")
   .then(function (project) {
 
       console.log(project[0][0].Sensors_SID);
